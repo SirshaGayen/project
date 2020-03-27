@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Home page</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script> -->
+    <script src="https://code.angularjs.org/1.5.9/angular-route.js"></script>
+    <script src="https://code.angularjs.org/1.5.9/angular.min.js"></script>
+    <script src="https://code.angularjs.org/1.5.9/angular.js"></script>
+</head>
+
+<body ng-app="demo">
+    <div ng-controller="UserController">
+
+        <p>{{a}}</p>
+        <div class="row">
+            <table>
+                <thead>
+                    <tr>
+                        <td>Paper Name</td>
+                        <td>Paper Price</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="paper in paperArray track by $index">
+                        <td>
+                            <input type="text" ng-model="paper.name">
+                        </td>
+                        <td>
+                            <input type="text" ng-model="paper.id">
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+<script src="../static/javascript/app.js"></script>
+<script src="../static/javascript/UserController.js"></script>
+<script src="../static/javascript/UserService.js"></script>
+<!-- <script src="../static/javascript/PaperController.js"></script> -->
+<!-- <script src="//ajax.googleapis.com/ajax/libs/angularjs/X.Y.Z/angular-route.js"></script> -->
+
+</html>
