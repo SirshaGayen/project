@@ -1,23 +1,94 @@
 <!DOCTYPE html>
 <html>
 
+<script type="text/javascript"
+	src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript">
+	$("#btnPrint")
+			.live(
+					"click",
+					function() {
+						var divContents = $("#dvContainer").html();
+						var printWindow = window.open('', '',
+								'height=400,width=800');
+						printWindow.document
+								.write('<html><head><title></title>');
+						printWindow.document
+								.write('</head><style>table,td{border: 1px solid black;border-collapse: collapse;} .TableHeight{height :50%; overflow: hidden;} input[type="text" i] {padding: 0;border:0;} .TextStyle1{text-align:left;} .ClassNoMargin{border-top-style:hidden;} .ClassNoMarginBottom{border-bottom-style:hidden;} .RowHeight{height: 5%;} .DottedUnderLine{text-decoration:underline;text-decoration-style: dotted;text-underline-position: under; } .TextStyle{border:0;text-align: left;font-size: 12px;} .HeaderStyle{text-align: center;font-size: 14px;padding:0px}</style><body >');
+						printWindow.document.write(divContents);
+						printWindow.document.write('</body></html>');
+						printWindow.document.close();
+						printWindow.print();
+					});
+</script>
+<style>
+table, td {
+	border: 1px solid black;
+	border-collapse: collapse;
+	border-top-style: 1px solid black;
+}
+
+.TableHeight {
+	height: 50%;
+	overflow: hidden;
+}
+
+input[type="text" i] {
+	padding: 0;
+	border: 0;
+}
+
+.TextStyle1 {
+	text-align: left;
+}
+
+.ClassNoMargin {
+	border-top-style: hidden;
+}
+
+.ClassNoMarginBottom {
+	border-bottom-style: hidden;
+}
+
+.RowHeight {
+	height: 5%;
+}
+
+.DottedUnderLine {
+	text-decoration: underline;
+	text-decoration-style: dotted;
+	text-underline-position: under;
+	width: 100%;
+}
+
+.TextStyle {
+	border: 0;
+	text-align: left;
+	font-size: 12px;
+}
+
+.HeaderStyle {
+	text-align: center;
+	padding: 0;
+}
+</style>
 <head>
-    <title>Home page</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script> -->
-    <script src="https://code.angularjs.org/1.5.9/angular-route.js"></script>
-    <script src="https://code.angularjs.org/1.5.9/angular.min.js"></script>
-    <script src="https://code.angularjs.org/1.5.9/angular.js"></script>
+<title>Home page</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script> -->
+<!--<script src="https://code.angularjs.org/1.5.9/angular-route.js"></script>-->
+<!-- <script src="https://code.angularjs.org/1.5.2/angular.min.js"></script>
+    <script src="https://code.angularjs.org/1.5.2/angular.js"></script> -->
 </head>
 
-<body ng-app="demo">
-    <div ng-controller="UserController">
+<body data-ng-app="demo">
+	<div ng-controller="Hello">
 
-        <p>{{a}}</p>
-        <div class="row">
-            <table>
-                <thead>
+
+		<div class="row">
+			<table>
+				<!--<thead>
                     <tr>
                         <td>Paper Name</td>
                         <td>Paper Price</td>
@@ -32,14 +103,289 @@
                             <input type="text" ng-model="paper.id">
                         </td>
                     </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
+                </tbody>-->
+				<thead>
+					<tr>
+						<td>Item Name</td>
+						<td>Item Price</td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="item in itemArray track by $index">
+						<td><input type="text" ng-model="item.itemName" readOnly>
+						</td>
+						<td><input type="text" ng-model="item.price" readOnly>
+						</td>
+						<td><input type="text" ng-model="item.quantity"
+							ng-change="change1(item)"></td>
+					</tr>
+				</tbody>
+			</table>
+			<button ng-click="submitOrder()">SUBMIT ORDER</button>
+		</div>
+		<div id="dvForm">
+			<form id="form1">
+				<div id="dvContainer" style="text-align: center; margin: 10px;">
+
+					<div style="text-decoration: underline; text-align: center;">TAX
+						INVOICE CUM CHALLAN</div>
+					<section>
+						<div style="width: 30%; height: 30px; float: left;"></div>
+						<div
+							style="margin-left: 30%; width: 40%; height: 30px; float: center;">
+							<div
+								style="font-weight: 600; font-size: 18px; color: red; allign: center; text-align: center; padding-top: 6px;">S.G.
+								PRODUCT & INDUSTRIES</div>
+							<div style="text-align: center;">
+								Manufacturer of Hardware Goods.<br> 42/1, Bakhrahat Road,
+								Kol - 700063.
+							</div>
+						</div>
+						<div style="margin-left: 70%; height: 30px; float: right;">
+							<table align="right">
+								<tr>
+									<td width="10%"></td>
+									<td>Original for Recipient</td>
+								</tr>
+								<tr>
+									<td></td>
+									<td>Duplicate for Supplier</td>
+								</tr>
+								<tr>
+									<td></td>
+									<td>Triplicate for Transporter</td>
+								</tr>
+							</table>
+						</div>
+					</section>
+					<div
+						style="float: left; text-align: left; padding-top: 50px; padding-bottom: 20px;">
+						<table style="border: 0">
+							<tr>
+								<td style="border: 0; font-size: 13px;">GSTIN No -
+									19AAYFS8967NIZK&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span
+									style="float: right;">STATE CODE : 19.</span>
+								</td>
+							</tr>
+							<tr>
+								<td style="border: 0; font-size: 13px;">Mobile No:
+									9830654099.<span style="float: right;">WEST BENGAL.</span>
+								</td>
+							</tr>
+						</table>
+					</div>
+					<div class="row"
+						style="float: right; padding-top: 50px; padding-bottom: 20px;">
+						<table align="right" style="width: 20px;" class="TextStyle1">
+							<tr>
+								<td>Invoice No.:<input type="text"></td>
+								<td>Date:<input type="text"></td>
+							</tr>
+							<tr>
+								<td>Order No.:<input type="text"></td>
+								<td>Date:<input type="text"></td>
+							</tr>
+							<tr>
+								<td colspan="2">Vehicle No.:<input type="text"></td>
+							</tr>
+						</table>
+					</div>
+					<div align="center" style="padding-top: 30px;">
+						<table style="border: 0; width: 90%">
+							<tr style="padding-bottom: 10px;">
+								<td style="border: 0; width: 18%">Buyer's Name :</td>
+								<td style="border: 0; border-bottom: 2px dotted; width: 80%">{{buyerAdd.buyerName}}</td>
+							</tr>
+							<tr style="padding-bottom: 10px;">
+								<td style="border: 0; width: 18%">Address :</td>
+								<td style="border: 0; border-bottom: 2px dotted; width: 80%">{{buyerAdd.address}}</td>
+							</tr>
+							<tr style="padding-bottom: 10px;">
+								<td style="border: 0; width: 18%">GSTIN/UIN :</td>
+								<td style="border: 0; border-bottom: 2px dotted; width: 80%">{{buyerAdd.gstin}}</td>
+							</tr>
+						</table>
+					</div>
+
+					<div id="table1" align="center" style="padding-top: 30px;">
+						<table align="center" class="TableHeight" style="width: 100%">
+							<tr style="height: 2%">
+								<td width="3%" class="HeaderStyle">Sl No.</td>
+								<td width="41%" class="HeaderStyle">Name of Product</td>
+								<td width="12%" class="HeaderStyle">HSN/SAC</td>
+								<td width="6%" class="HeaderStyle">Qnty. Pkt</td>
+								<td width="6%" class="HeaderStyle">Rate/Pkt</td>
+								<td width="16%" class="HeaderStyle" colspan=2>Amount</span></td>
+								<td width="16%" class="HeaderStyle" colspan=2>Amount</span></td>
+							</tr>
+							<tr style="height:2%" class="ClassNoMargin">
+								<td width="3%" class="HeaderStyle"></td>
+								<td width="41%" class="HeaderStyle"></td>
+								<td width="12%" class="HeaderStyle"></td>
+								<td width="6%" class="HeaderStyle"></td>
+								<td width="6%" class="HeaderStyle"></td>
+								<td width="12%" class="HeaderStyle"
+									style="text-align: left; border-right-style: hidden;">Rs.</span></td>
+								<td width="4%" class="HeaderStyle" style="text-align: left;">P.</span></td>
+								<td width="12%" class="HeaderStyle"
+									style="text-align: left; border-right-style: hidden;">Rs.</span></td>
+								<td width="4%" class="HeaderStyle" style="text-align: left;">P.</span></td>
+							</tr>
+							<tr class="RowHeight"
+								ng-repeat="item in tableArray track by $index">
+								<td class="ClassNoMarginBottom">{{$index+1}}</td>
+								<td class="ClassNoMarginBottom">{{item.itemName}}</td>
+								<td class="ClassNoMarginBottom"></td>
+								<td class="ClassNoMarginBottom">{{item.qtny}}
+								<td class="ClassNoMarginBottom">{{item.price | limitTo:4}}
+								<td class="ClassNoMarginBottom">{{item.amount}}</td>
+								<td class="ClassNoMarginBottom"></td>
+								<td class="ClassNoMarginBottom">{{totalSum}}</td>
+								<td class="ClassNoMarginBottom"></td>
+							</tr>
+							<tr style="height: 50%">
+								<td class="ClassNoMargin ClassNoMarginBottom"></td>
+								<td class="ClassNoMargin ClassNoMarginBottom"></td>
+								<td class="ClassNoMargin"></td>
+								<td class="ClassNoMargin"><div style="overflow: auto;"></div></td>
+								<td class="ClassNoMargin"></td>
+								<td class="ClassNoMargin"></td>
+								<td class="ClassNoMargin"></td>
+								<td class="ClassNoMargin"></td>
+								<td class="ClassNoMargin"></td>
+							</tr>
+							<tr class="RowHeight">
+								<td></td>
+								<td></td>
+								<td colspan=3>Total Amount Before Tax</td>
+								<td></td>
+								<td></td>
+								<td id="AmountBeforeTax">{{totalSum}}</td>
+								<td></td>
+							</tr>
+							<tr class="RowHeight">
+								<td class="ClassNoMargin"></td>
+								<td class="ClassNoMargin"></td>
+								<td colspan=3>Add: CGST @ 9%</td>
+								<td></td>
+								<td></td>
+								<td id="CGSTvalue">{{cgstAmount}}</td>
+								<td></td>
+							</tr>
+							<tr class="RowHeight">
+								<td class="ClassNoMargin"></td>
+								<td class="ClassNoMargin"></td>
+								<td colspan=3>Add: SGST @ 9%</td>
+								<td></td>
+								<td></td>
+								<td id="SGSTvalue">{{sgstAmount}}</td>
+								<td></td>
+							</tr>
+							<tr class="RowHeight">
+								<td class="ClassNoMargin"></td>
+								<td class="ClassNoMargin"></td>
+								<td colspan=3>Add: IGST @</td>
+								<td></td>
+								<td></td>
+								<td id="IGSTvalue"></td>
+								<td></td>
+							</tr>
+							<tr class="RowHeight">
+								<td class="ClassNoMargin"></td>
+								<td class="ClassNoMargin" size="4">In Words Rupees</td>
+								<td colspan=3>Round Off +/-</td>
+								<td></td>
+								<td></td>
+								<td id="RoundOffvalue"></td>
+								<td></td>
+							</tr>
+							<tr class="RowHeight">
+								<td class="ClassNoMargin"></td>
+								<td class="ClassNoMargin DottedUnderLine" id="AmountinWords"
+									size="4" style="width: 260px; height: 30px; font-size: 14px">{{printInwords}}</td>
+								<td colspan=3>Total Amount After Tax</td>
+								<td></td>
+								<td></td>
+								<td style="height: 30px;" id="AmountAfterTax">{{finalSum}}</td>
+								<td></td>
+							</tr>
+						</table>
+					
+					<div style="text-align: right;">Certified That the
+						Particulars Given Above Are True and Correct.</div>
+					<div style="text-align: right; padding-right: 20px;">For S.G.
+						PRODUCT & INDUSTRIES.</div>
+				</div>
+				<div>
+
+					<table width="100%" style="border: 0; padding-top: 80px;">
+						<tr>
+							<td width="70%" style="border: 0;"></td>
+							<td width="30%" style="border: 0;"></td>
+						</tr>
+						<tr>
+							<td width="70%" style="border: 0;"></td>
+							<td width="30%" style="border: 0;"></td>
+						</tr>
+						<tr>
+							<td width="70%" class="TextStyle">BANK DETAILS</td>
+							<td width="30%" class="TextStyle"></td>
+						</tr>
+						<tr>
+							<td width="70%" class="TextStyle">UCO BANK. Br:THAKURPUKUR.
+								KOL 700063</td>
+							<td width="30%" class="TextStyle"></td>
+						</tr>
+						<tr>
+							<td width="70%" class="TextStyle">ACCOUNT NO:
+								0000000000000000666&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IFSC CODE:
+								UCBA0000000</td>
+							<td width="30%" style="border: 0; text-align: center;">Authorized
+								Signatory</td>
+						</tr>
+						<tr>
+							<td width="70%" class="TextStyle">INTEREST @ 18% P.A. WILL
+								BE CHARGED IF THE BILL IS NOT PAID ON PRESENTATION.</td>
+							<td width="30%" class="TextStyle"></td>
+						</tr>
+					</table>
+				</div>
+		</div>
+
+	
+	<div style="padding-top: 15px; padding-bottom: 30px;">
+		<table align="left" style="width: 20%; padding-top: 30px;">
+			<tr>
+				<td><select name="projectStatus1" ng-model="buyerId"
+					ng-change="selectBuyer()">
+						<option ng-repeat="buyer in buyerArray" value={{buyer.id}}>{{buyer.buyerName}}
+
+						
+				</select></td>
+				<td><button ng-click="selectBuyer()">SELECT BUYER</button></td>
+			</tr>
+			<tr>
+				<td><select name="projectStatus" ng-model="itemToAdd">
+						<option ng-repeat="item in itemArray" value={{item.id}}>{{item.itemName}}
+						
+				</select></td>
+				<td><input type="number" ng-model="qntyToadd"></td>
+				<td><button ng-click="addItem()">ADD ITEM</button></td>
+			</tr>
+		</table>
+		<button ng-click="calculateAmount()">CALCULATE</button>
+	</div>
+	<input allign="center" type="button" value="Print Div Contents"
+		id="btnPrint" />
+	</form>
+	</div>
+	</div>
 </body>
-<script src="../static/javascript/app.js"></script>
-<script src="../static/javascript/UserController.js"></script>
-<script src="../static/javascript/UserService.js"></script>
+<script src="https://code.angularjs.org/1.5.2/angular.js"></script>
+<script src="/js/Items.js"></script>
+<!-- <script src="/static/javascript/app.js"></script>
+<script src="/static/javascript/UserController.js"></script>
+<script src="/static/javascript/UserService.js"></script> -->
 <!-- <script src="../static/javascript/PaperController.js"></script> -->
 <!-- <script src="//ajax.googleapis.com/ajax/libs/angularjs/X.Y.Z/angular-route.js"></script> -->
 
