@@ -1,22 +1,23 @@
 package infy2;
 
-import java.util.ArrayList;
+import java.util.List;
 
-import javax.enterprise.inject.Produces;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import infy1.PaperService;
 
-import java.util.List;
-
 @RestController
 public class TesyController {
+	
+	
+	Logger logger = LoggerFactory.getLogger(TesyController.class);
 	
 	@Autowired
 	PaperService paperService;
@@ -25,5 +26,32 @@ public class TesyController {
 public List<Paper12> getAllPapers() {
 	
 	return paperService.getAllPapers();
+}
+
+@RequestMapping("/getAllItems")
+@GetMapping
+public List<ItemModel> getAllItems() {
+	
+	return paperService.getAllItems();
+}
+@RequestMapping("/saveAll")
+@PostMapping
+public List<Paper12> saveAllPapers(@RequestBody Paper12 pp) {
+	
+	return paperService.getAllPapers();
+}
+
+@RequestMapping("/saveOrder")
+@PostMapping
+public String saveOrder(@RequestBody OrderModel orderModel) {
+	
+	return paperService.saveOrder(orderModel);
+}
+
+@RequestMapping("/getAllBuyer")
+@GetMapping
+public List<BuyerModel> fetchBuyerInfo() {
+	
+	return paperService.fetchBuyerInfo();
 }
 }
